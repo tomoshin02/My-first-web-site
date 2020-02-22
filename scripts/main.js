@@ -16,23 +16,33 @@ myImage.onclick = function() {
 let myButton = document.querySelector('button');
 let myHeading = document.querySelector('h1');
 
-function setUserName() {
-  let myName = prompt('あなたの名前を入力してください。');
-  if(!myName || myName === null) {
-    setUserName();
+function showh1() {
+  let Name = localStorage.getItem('name');
+  if (Name === null || Name.length === 0 ) {
+    myHeading.innerHTML = 'Mozilla is cool.';
   } else {
-    localStorage.setItem('name', myName);
-    myHeading.innerHTML = 'Mozilla is cool, ' + myName;
+    myHeading.innerHTML = 'Mozilla is cool, ' + Name;
   }
 }
-
+// setUserNameの内容
+function getUserName() {
+  let myName;
+  myName = prompt('あなたの名前を入力してください。');
+  if(myName != null) {
+    localStorage.setItem('name', myName);
+    showh1();
+  }
+}
+console.log(localStorage);
+// ページ読み込み時にユーザーネームがセットされているか確認
 if(!localStorage.getItem('name')) {
-  setUserName();
+  getUserName();
 } else {
   let storedName = localStorage.getItem('name');
-  myHeading.innerHTML = 'Mozilla is cool, ' + storedName;
+  showh1();
 }
 
+// setUserNameを起動
 myButton.onclick = function() {
-  setUserName();
+  getUserName();
 }
